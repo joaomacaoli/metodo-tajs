@@ -23,6 +23,8 @@ class Person {
         //  ... banco de dados, api, etc
 
         console.log('Registrado com sucesso!!', person);
+
+        return 'person saved'
     }
 
     static process(person) {

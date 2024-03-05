@@ -3,9 +3,25 @@ import Person from "../src/Person";
 
 describe('#Person Suite', () => {
     describe('#validate', () => {
-        it('should throw an error when there is no name', () => {
+        it('should throw an error when empty name', () => {
             const mockInvalidName = {
                 name: '',
+                cpf: '123.456.789-00'
+            }
+
+            expect(() => Person.validate(mockInvalidName))
+                .toThrow(new Error('Name is required'))
+        })
+        it('should throw an error when empty cpf', () => {
+            const mockInvalidCPF = {
+                name: 'John Doe',
+            }
+
+            expect(() => Person.validate(mockInvalidCPF))
+                .toThrow(new Error('CPF is required'))
+        })
+        it('should throw an error when there is no name', () => {
+            const mockInvalidName = {
                 cpf: '123.456.789-00'
             }
 
@@ -56,6 +72,49 @@ describe('#Person Suite', () => {
         })
     })
 
+    describe('#save', () => {
+        it('should throw an error when there is no prop name', () => {
+            const mockInvalidName = {
+                cpf: '12345678900',
+                lastName: 'da silva'
+            }
+
+            expect(() => Person.save(mockInvalidName))
+                .toThrow(new Error(`Cannot save invalid person: ${JSON.stringify(mockInvalidName)}`))
+        })
+        it('should throw an error when there is no prop cpf', () => {
+            const mockInvalidCPF = {
+                name: 'Xuxa',
+                lastName: 'da silva'
+            }
+
+            expect(() => Person.save(mockInvalidCPF))
+                .toThrow(new Error(`Cannot save invalid person: ${JSON.stringify(mockInvalidCPF)}`))
+        })
+        it('should throw an error when there is no prop lastName', () => {
+            const mockInvalidLastName = {
+                name: 'Xuxa',
+                cpf: '12345678900',
+            }
+
+            expect(() => Person.save(mockInvalidLastName))
+                .toThrow(new Error(`Cannot save invalid person: ${JSON.stringify(mockInvalidLastName)}`))
+        })
+        it('should save person when is formatted', () => {
+            const mockPerson = {
+                name: 'Xuxa',
+                cpf: '12345678900',
+                lastName: 'da silva'
+            }
+
+            const savePerson =  Person.save(mockPerson)
+
+            const expected = 'person saved'
+
+            expect(savePerson).toStrictEqual(expected)
+        })
+    })
+
     describe('#process', () => {
         it('should process a valid person', () => {
             //    Uma outra ideia é não retestr o que já foi testado
@@ -78,9 +137,9 @@ describe('#Person Suite', () => {
                     Person.validate.name
                 )
                 .mockReturnValue()
-                // .mockImplementation(() => {
-                //     throw new Error('Deu ruim!!')
-                // })
+            // .mockImplementation(() => {
+            //     throw new Error('Deu ruim!!')
+            // })
 
             jest
                 .spyOn(
