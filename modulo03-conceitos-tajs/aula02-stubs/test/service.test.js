@@ -23,6 +23,16 @@ describe('Service Test Suite', () => {
             const result = await _service.read()
             expect(result).toEqual([])
         })
+        it('should throw an error if the file does not exist', async () => {
+            const error = new Error('File not found');
+            jest.spyOn(
+                fs,
+                'readFile'
+            )
+                .mockRejectedValue(error);
+
+            await expect(_service.read()).rejects.toThrow(error);
+        });
         it('should return users without password if file contains users', async () => {
             // Arrange
             const dbData = [
