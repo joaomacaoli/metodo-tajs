@@ -1,0 +1,23 @@
+{
+  "name": "aula-01-tdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch src/index.js",
+    "test": "npx cucumber-js",
+    "test:dev": "node --watch node_modules/.bin/cucumber-js --fail-fast --format progress --format html:cucumber-report.html",
+    "test:debug": "node --watch --inspect-brk node_modules/.bin/cucumber-js --format progress --format html:cucumber-report.html"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "engines": {
+    "node": "v20.12.2"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.1",
+    "sinon": "^17.0.1"
+  }
+}
